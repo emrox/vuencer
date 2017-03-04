@@ -1,7 +1,7 @@
 <template lang="jade">
   div.step-seq
-    span( v-for="n in 3" )
-      sequencer-row( :steps = 16 )
+    span( v-for="sequence in 4" )
+      sequencer-row( :sequence = "sequence", :steps = 16 )
 </template>
 
 <script>

@@ -12,6 +12,8 @@
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
   * {
     box-sizing: border-box;
   }
@@ -23,5 +25,6 @@
   #app {
     margin-top: 60px;
     text-align: center;
+    font-family: 'Source Code Pro', monospace;
   }
 </style>
