@@ -38,15 +38,16 @@
       height: 2em;
       border: 1px solid #3d3d3d;
       border-radius: 50%;
-      background-color: #000;
+      background-color: #111;
       cursor: pointer;
 
       &:hover {
-        background-color: #333;
+        background-color: #222;
       }
 
       &:active {
-        border-color: #333;
+        background-color: #333;
+        border-color: transparent;
       }
     }
 
