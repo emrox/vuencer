@@ -1,14 +1,14 @@
 <template lang="jade">
   div.step-seq
-    span( v-for="n in 16" )
-      sequencer-trigger
+    span( v-for="n in 3" )
+      sequencer-row
 </template>
 
 <script>
-  import SequencerTrigger from './SequencerTrigger.vue'
+  import SequencerRow from './SequencerRow.vue'
 
   export default {
-    components: { SequencerTrigger },
+    components: { SequencerRow },
     data () {
       return {
       }
