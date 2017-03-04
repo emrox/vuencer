@@ -72,6 +72,7 @@
       color: #ccc;
       text-align: center;
       cursor: default;
+      user-select: none;
 
       &--fourth {
         color: #000;
