@@ -15,7 +15,7 @@
     &__button {
       width: 2em;
       height: 2em;
-      border: 1px solid #999;
+      border: 1px solid #3d3d3d;
       border-radius: 50%;
       background-color: #000;
       cursor: pointer;
