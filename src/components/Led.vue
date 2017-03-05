@@ -3,6 +3,9 @@
 </template>
 
 <script>
+  import EventBus from '../libs/EventBus';
+
+
   export default {
     props: {
       on: {
@@ -19,7 +22,13 @@
       },
     },
     created() {
-      this.flash();
+      const self = this;
+
+      // initial flash on load
+      self.flash();
+
+      const tickFlash = function () { self.flash(); };
+      EventBus.$on('tick', tickFlash);
     },
     data() {
       return {
