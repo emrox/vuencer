@@ -1,13 +1,16 @@
 <template lang="jade">
   div.sequencer-trigger
     div.sequencer-trigger__button
-    div.sequencer-trigger__state
+    led
     div.sequencer-trigger__label( v-bind:class="isFourth" )
       {{ step }}
 </template>
 
 <script>
+  import Led from './Led.vue'
+
   export default {
+    components: { Led },
     props: {
       step: {
         type: Number,
@@ -51,16 +54,6 @@
       }
     }
 
-    &__state {
-      margin: 0.4em auto 0;
-      width: 0.4em;
-      height: 0.4em;
-      border: 1px solid #100;
-      border-radius: 50%;
-      background-color: #100;
-      animation: sequencer-trigger__state__blink 1s steps(2, start) infinite;
-    }
-
     &__label {
       margin: 0.7em auto 0;
       padding: 0.2em 0em;
@@ -79,12 +72,9 @@
         background-color: #ccc;
       }
     }
-  }
 
-  @keyframes sequencer-trigger__state__blink {
-    to {
-      background-color: #f33;
-      opacity: 1;
+    .led {
+      margin: 0.4em auto 0;
     }
   }
 </style>

@@ -13,6 +13,7 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+  @import url('https://fonts.googleapis.com/css?family=VT323');
 
   * {
     box-sizing: border-box;
@@ -26,5 +27,9 @@
     margin-top: 60px;
     text-align: center;
     font-family: 'Source Code Pro', monospace;
+  }
+
+  .font-terminal {
+    font-family: 'VT323', monospace;
   }
 </style>
