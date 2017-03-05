@@ -3,9 +3,6 @@
 </template>
 
 <script>
-  import EventBus from '../libs/EventBus';
-
-
   export default {
     props: {
       on: {
@@ -18,7 +15,7 @@
         const self = this;
         self.isOn = true;
         const switchOff = function () { self.isOn = false; };
-        setTimeout(switchOff, 200);
+        setTimeout(switchOff, 150);
       },
     },
     created() {
@@ -28,7 +25,7 @@
       self.flash();
 
       const tickFlash = function () { self.flash(); };
-      EventBus.$on('tick', tickFlash);
+      self.$on('tick', tickFlash);
     },
     data() {
       return {

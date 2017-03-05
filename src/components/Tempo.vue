@@ -31,7 +31,10 @@
     methods: {
       startInterval() {
         const self = this;
-        const flasher = function () { EventBus.$emit('tick', {}); };
+        const flasher = function () {
+          EventBus.$emit('tick');
+          self.$children[0].$emit('tick');
+        };
 
         if (self.runningInterval) { clearInterval(self.runningInterval); }
         self.runningInterval = setInterval(flasher, self.tickMilliSeconds);
