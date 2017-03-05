@@ -6,21 +6,17 @@
 </template>
 
 <script>
-  import Led from './Led.vue'
+  import Led from './Led.vue';
 
   export default {
     components: { Led },
     props: {
       tempo: {
         type: Number,
-        default: 120
-      }
+        default: 120,
+      },
     },
-    data () {
-      return {
-      }
-    }
-  }
+  };
 </script>
 
 <style lang="scss">

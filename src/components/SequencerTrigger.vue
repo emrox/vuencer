@@ -7,28 +7,24 @@
 </template>
 
 <script>
-  import Led from './Led.vue'
+  import Led from './Led.vue';
 
   export default {
     components: { Led },
     props: {
       step: {
         type: Number,
-        default: 1
-      }
+        default: 1,
+      },
     },
     computed: {
-      isFourth: function () {
+      isFourth() {
         return {
-          'sequencer-trigger__label--fourth': this.step % 4 === 1
-        }
-      }
+          'sequencer-trigger__label--fourth': this.step % 4 === 1,
+        };
+      },
     },
-    data () {
-      return {
-      }
-    }
-  }
+  };
 </script>
 
 <style scoped lang="scss">

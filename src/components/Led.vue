@@ -1,8 +1,32 @@
 <template lang="jade">
-  .led
+  .led( v-bind:class="{ 'led--on': isOn }" )
 </template>
 
 <script>
+  export default {
+    props: {
+      on: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    methods: {
+      flash() {
+        const self = this;
+        self.isOn = true;
+        const switchOff = function () { self.isOn = false; };
+        setTimeout(switchOff, 200);
+      },
+    },
+    created() {
+      this.flash();
+    },
+    data() {
+      return {
+        isOn: this.on,
+      };
+    },
+  };
 </script>
 
 <style lang="scss">
@@ -12,14 +36,9 @@
     border: 1px solid #100;
     border-radius: 50%;
     background-color: #100;
-    animation: led__blink 1s steps(2, start) infinite;
-  }
 
-  @keyframes led__blink {
-    to {
+    &--on {
       background-color: #f33;
-      opacity: 1;
     }
   }
-
 </style>

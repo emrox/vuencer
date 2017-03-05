@@ -6,16 +6,12 @@
 </template>
 
 <script>
-  import SequencerRow from './SequencerRow.vue'
-  import Tempo from './Tempo.vue'
+  import SequencerRow from './SequencerRow.vue';
+  import Tempo from './Tempo.vue';
 
   export default {
     components: { SequencerRow, Tempo },
-    data () {
-      return {
-      }
-    }
-  }
+  };
 </script>
 
 <style scoped>
