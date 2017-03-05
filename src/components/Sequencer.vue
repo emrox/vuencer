@@ -23,6 +23,7 @@
     data() {
       return {
         stepCount: 0,
+        currentRow: 1,
       };
     },
     methods: {
@@ -39,10 +40,15 @@
           self.stepCount = 1;
         }
 
-        const currentRow = Math.ceil(self.stepCount / self.steps);
         const currentRowStep = (self.stepCount % self.steps) + 1;
+        if (currentRowStep === 1) {
+          self.currentRow += 1;
+          if (self.currentRow > 4) {
+            self.currentRow = 1;
+          }
+        }
 
-        self.$children[currentRow - 1].$emit('step', currentRowStep);
+        self.$children[self.currentRow - 1].$emit('step', currentRowStep);
       },
     },
     created() {
