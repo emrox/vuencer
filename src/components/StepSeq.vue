@@ -1,15 +1,17 @@
 <template lang="jade">
   div.step-seq
+    midi
     tempo
     sequencer
 </template>
 
 <script>
-  import Sequencer from './Sequencer.vue';
+  import Midi from './Midi.vue';
   import Tempo from './Tempo.vue';
+  import Sequencer from './Sequencer.vue';
 
   export default {
-    components: { Sequencer, Tempo },
+    components: { Midi, Tempo, Sequencer },
   };
 </script>
 

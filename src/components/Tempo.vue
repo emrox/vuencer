@@ -19,32 +19,29 @@
     },
     data() {
       return {
-        runningInterval: undefined,
         tempo: this.initialTempo,
       };
     },
-    computed: {
-      tickMilliSeconds() {
-        return 1000 * (60 / this.tempo);
+    methods: {
+      publishTempo() {
+        EventBus.$emit('setTempo', this.tempo);
+      },
+      flashLed(tickCount) {
+        const self = this;
+        if (tickCount === 1) {
+          self.$children[0].flash();
+        }
       },
     },
-    methods: {
-      startInterval() {
-        const self = this;
-        const flasher = function () {
-          EventBus.$emit('tick');
-          self.$children[0].$emit('tick');
-        };
-
-        if (self.runningInterval) { clearInterval(self.runningInterval); }
-        self.runningInterval = setInterval(flasher, self.tickMilliSeconds);
+    watch: {
+      tempo() {
+        this.publishTempo();
       },
     },
     created() {
-      this.startInterval();
-    },
-    updated() {
-      this.startInterval();
+      const self = this;
+      EventBus.$on('tick', self.flashLed);
+      self.publishTempo();
     },
   };
 </script>
