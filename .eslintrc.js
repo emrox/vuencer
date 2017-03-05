@@ -24,6 +24,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'func-names': [0, 'as-needed'],
+    'func-names': [1, 'as-needed'],
+    'max-len': [1, { 'code': 120, 'ignoreComments': true, }],
   }
 }
