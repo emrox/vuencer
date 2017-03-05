@@ -8,6 +8,7 @@
   import SequencerTrigger from './SequencerTrigger.vue';
 
   export default {
+    components: { SequencerTrigger },
     props: {
       sequence: {
         type: Number,
@@ -23,7 +24,15 @@
         return (this.sequence * this.steps) - this.steps;
       },
     },
-    components: { SequencerTrigger },
+    methods: {
+      processStep(stepCount) {
+        this.$children[stepCount - 1].$emit('trigger');
+      },
+    },
+    created() {
+      const self = this;
+      self.$on('step', self.processStep);
+    },
   };
 </script>
 

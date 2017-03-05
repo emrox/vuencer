@@ -24,6 +24,14 @@
         };
       },
     },
+    methods: {
+      trigger() {
+        this.$children[0].$emit('tick');
+      },
+    },
+    created() {
+      this.$on('trigger', this.trigger);
+    },
   };
 </script>
 

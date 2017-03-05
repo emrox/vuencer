@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import EventBus from '../libs/EventBus';
   import SequencerRow from './SequencerRow.vue';
 
   export default {
@@ -18,6 +19,36 @@
         type: Number,
         default: 16,
       },
+    },
+    data() {
+      return {
+        stepCount: 0,
+      };
+    },
+    methods: {
+      processTick(tickCount) {
+        if (tickCount % 24 === 1) {
+          this.$emit('step');
+        }
+      },
+      processStep() {
+        const self = this;
+
+        self.stepCount += 1;
+        if (self.stepCount > (self.rows * self.steps)) {
+          self.stepCount = 1;
+        }
+
+        const currentRow = Math.ceil(self.stepCount / self.steps);
+        const currentRowStep = (self.stepCount % self.steps) + 1;
+
+        self.$children[currentRow - 1].$emit('step', currentRowStep);
+      },
+    },
+    created() {
+      const self = this;
+      EventBus.$on('tick', self.processTick);
+      self.$on('step', self.processStep);
     },
   };
 </script>
