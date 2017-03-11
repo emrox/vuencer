@@ -2,9 +2,13 @@
   .midi
     .midi__start(v-on:click="start")
     .midi__stop(v-on:click="stop")
+    select.midi__choose-output(v-model="midiOutput")
+      option(v-for="output in midiOutputs", v-bind:value="output.id")
+        {{ output.name }}
 </template>
 
 <script>
+  import WebMidi from 'webmidi';
   import EventBus from '../libs/EventBus';
 
   export default {
@@ -14,6 +18,8 @@
         bpm: undefined,
         tickInterval: undefined,
         tickCounter: 0,
+        midiOutputs: [],
+        midiOutput: undefined,
       };
     },
     computed: {
@@ -53,10 +59,25 @@
         self.running = false;
         if (self.tickInterval) { clearInterval(self.tickInterval); }
       },
+      initMidi() {
+        const self = this;
+
+        WebMidi.enable((err) => {
+          if (err) { alert(err); return; }
+
+          WebMidi.outputs.forEach(output => {
+            self.midiOutputs.push({
+              id: output.id,
+              name: `${output.name} (${output.manufacturer})`,
+            });
+          });
+        });
+      },
     },
     created() {
       const self = this;
       EventBus.$on('setTempo', self.setBpm);
+      self.initMidi();
     },
     updated() {
       this.initInterval();
@@ -117,6 +138,18 @@
           background-color: #999;
         }
       }
+    }
+
+    &__choose-output {
+      display: block;
+      margin: 1em auto;
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 1em;
+      text-align: center;
+      color: #ccc;
+      background-color: #555;
+      outline: none;
     }
   }
 </style>
