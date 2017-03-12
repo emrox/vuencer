@@ -2,16 +2,18 @@
   div.step-seq
     midi
     tempo
+    keys
     sequencer
 </template>
 
 <script>
   import Midi from './Midi.vue';
   import Tempo from './Tempo.vue';
+  import Keys from './Keys.vue';
   import Sequencer from './Sequencer.vue';
 
   export default {
-    components: { Midi, Tempo, Sequencer },
+    components: { Midi, Tempo, Keys, Sequencer },
   };
 </script>
 
