@@ -28,7 +28,7 @@
     },
     methods: {
       processTick(tickCount) {
-        if (tickCount % 24 === 1) {
+        if (tickCount % 6 === 1) {
           this.$emit('step');
         }
       },

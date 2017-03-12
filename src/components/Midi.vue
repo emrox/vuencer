@@ -27,7 +27,7 @@
     computed: {
       tickMilliSeconds() {
         const beatMilliseconds = 1000 * (60 / this.bpm);
-        const messagesPerBeat = beatMilliseconds / 96;  // midi clock definition says 96 ticks per beat
+        const messagesPerBeat = beatMilliseconds / 24;  // midi clock definition says 96 ticks per beat = 24 per step
         return messagesPerBeat;
       },
       midiOutputDevices() {
@@ -52,7 +52,7 @@
         const self = this;
 
         self.tickCounter += 1;
-        if (self.tickCounter > 96) { self.tickCounter = 1; }
+        if (self.tickCounter > 24) { self.tickCounter = 1; }
 
         self.midiOutput.sendClock();
         EventBus.$emit('tick', self.tickCounter);
