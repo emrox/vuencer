@@ -54,16 +54,19 @@
         self.tickCounter += 1;
         if (self.tickCounter > 96) { self.tickCounter = 1; }
 
+        self.midiOutput.sendClock();
         EventBus.$emit('tick', self.tickCounter);
       },
       start() {
         const self = this;
         self.running = true;
         self.initInterval();
+        self.midiOutput.sendContinue();
       },
       stop() {
         const self = this;
         self.running = false;
+        self.midiOutput.sendStop();
         if (self.tickInterval) { clearInterval(self.tickInterval); }
       },
       initMidi() {
