@@ -2,8 +2,10 @@
   .midi
     .midi__start(v-on:click="start")
     .midi__stop(v-on:click="stop")
-    select.midi__choose-output(v-model="midiOutput")
-      option(v-for="output in midiOutputs", v-bind:value="output.id")
+    select.midi__choose-output(v-on:change="selectMidiOutput($event.target.value)")
+      option(value="")
+        | Select Midi Output Device
+      option(v-for="output in midiOutputDevices", v-bind:value="output.id")
         {{ output.name }}
 </template>
 
@@ -28,6 +30,9 @@
         const messagesPerBeat = beatMilliseconds / 96;  // midi clock definition says 96 ticks per beat
         return messagesPerBeat;
       },
+      midiOutputDevices() {
+        return this.updateMidiOutputDevices();
+      },
     },
     methods: {
       setBpm(newBpm) {
@@ -38,6 +43,8 @@
       initInterval() {
         const self = this;
         if (!self.running) { return; }
+        if (!self.midiOutput) { alert('Choose a output device first!'); return; }
+
         if (self.tickInterval) { clearInterval(self.tickInterval); }
         self.tickInterval = setInterval(self.ticker, self.tickMilliSeconds);
       },
@@ -61,17 +68,26 @@
       },
       initMidi() {
         const self = this;
-
         WebMidi.enable((err) => {
-          if (err) { alert(err); return; }
-
-          WebMidi.outputs.forEach(output => {
-            self.midiOutputs.push({
-              id: output.id,
-              name: `${output.name} (${output.manufacturer})`,
-            });
+          if (err) { alert(err); }
+          self.updateMidiOutputDevices();
+        });
+      },
+      updateMidiOutputDevices() {
+        const self = this;
+        self.midiOutputs = [];
+        WebMidi.outputs.forEach(output => {
+          self.midiOutputs.push({
+            id: output.id,
+            name: `${output.name} (${output.manufacturer})`,
           });
         });
+
+        return self.midiOutputs;
+      },
+      selectMidiOutput(choosenOutputId) {
+        if (choosenOutputId === '') { return; }
+        this.midiOutput = WebMidi.getOutputById(choosenOutputId);
       },
     },
     created() {
