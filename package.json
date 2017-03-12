@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "vue": "^2.2.1",
-    "vue-router": "^2.2.0",
     "webmidi": "^2.0.0-rc.5"
   },
   "devDependencies": {

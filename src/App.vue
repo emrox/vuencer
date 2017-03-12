@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <router-view></router-view>
+    <step-seq />
   </div>
 </template>
 
 <script>
+  import StepSeq from './components/StepSeq.vue';
+
   export default {
+    components: { StepSeq },
     name: 'app',
   };
 </script>
