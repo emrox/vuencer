@@ -1,21 +1,49 @@
 <template lang="jade">
   ul.keys
-    li.keys__white
-    li.keys__black
-    li.keys__white
-    li.keys__black
-    li.keys__white
-    li.keys__white
-    li.keys__black
-    li.keys__white
-    li.keys__black
-    li.keys__white
-    li.keys__black
-    li.keys__white
+    li(
+        v-for="key in keys",
+        :data-note="key",
+        :class="key.endsWith('#') ? 'keys__black' : 'keys__white'",
+        v-on:mousedown="startPlay",
+        v-on:mouseup="stopPlay",
+        v-on:mouseleave="stopPlay",
+     )
 </template>
 
 <script>
+  import EventBus from '../libs/EventBus';
+
   export default {
+    props: {
+      keys: {
+        type: Array,
+        default: () => ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+      },
+      octave: {
+        type: Number,
+        default: 3,
+      },
+    },
+    data() {
+      return {
+        currentNotePlaying: undefined,
+      };
+    },
+    methods: {
+      startPlay(event) {
+        const self = this;
+        const key = event.target;
+        const note = key.dataset.note;
+        self.currentNotePlaying = `${note}${self.octave}`;
+        EventBus.$emit('startPlayingNote', self.currentNotePlaying);
+      },
+      stopPlay() {
+        const self = this;
+        if (!self.currentNotePlaying) { return; }
+        EventBus.$emit('stopPlayingNote', this.currentNotePlaying);
+        self.currentNotePlaying = undefined;
+      },
+    },
   };
 </script>
 

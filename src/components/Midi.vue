@@ -92,10 +92,22 @@
         if (choosenOutputId === '') { return; }
         this.midiOutput = WebMidi.getOutputById(choosenOutputId);
       },
+      startPlayingNote(note) {
+        const self = this;
+        if (!self.midiOutput) { return; }
+        self.midiOutput.playNote(note);
+      },
+      stopPlayingNote(note) {
+        const self = this;
+        if (!self.midiOutput) { return; }
+        self.midiOutput.stopNote(note);
+      },
     },
     created() {
       const self = this;
       EventBus.$on('setTempo', self.setBpm);
+      EventBus.$on('startPlayingNote', self.startPlayingNote);
+      EventBus.$on('stopPlayingNote', self.stopPlayingNote);
       self.initMidi();
     },
     updated() {
