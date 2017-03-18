@@ -1,6 +1,6 @@
 <template lang="jade">
   div.sequencer-trigger
-    div.sequencer-trigger__button
+    div.sequencer-trigger__button( @click.ctrl="record" )
     led
     div.sequencer-trigger__label( v-bind:class="isFourth" )
       {{ step }}
@@ -17,6 +17,15 @@
         default: 1,
       },
     },
+    data() {
+      return {
+        play: {
+          note: undefined,
+          length: undefined,
+          velocity: undefined,
+        },
+      };
+    },
     computed: {
       isFourth() {
         return {
@@ -28,6 +37,12 @@
       trigger() {
         this.$children[0].$emit('tick');
       },
+      record() {
+        const self = this;
+        if (!self.$parent.$data.recording) { return; }
+
+        self.play.note = self.$parent.$data.recordNote;
+      },
     },
     created() {
       this.$on('trigger', this.trigger);
@@ -35,7 +50,7 @@
   };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .sequencer-trigger {
     display: inline-block;
     margin: 0.5em;
@@ -79,6 +94,12 @@
 
     .led {
       margin: 0.4em auto 0;
+    }
+  }
+
+  .recording .sequencer-trigger {
+    &__button {
+      border-color: #911;
     }
   }
 </style>
