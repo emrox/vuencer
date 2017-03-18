@@ -7,6 +7,7 @@
 </template>
 
 <script>
+  import EventBus from '../libs/EventBus';
   import Led from './Led.vue';
 
   export default {
@@ -35,7 +36,12 @@
     },
     methods: {
       trigger() {
-        this.$children[0].$emit('tick');
+        const self = this;
+        self.$children[0].$emit('tick');
+
+        if (self.play.note) {
+          EventBus.$emit('playObject', self.play);
+        }
       },
       record() {
         const self = this;
@@ -97,9 +103,11 @@
     }
   }
 
-  .recording .sequencer-trigger {
-    &__button {
-      border-color: #911;
+  .recording {
+    .sequencer-trigger {
+      &__button {
+        border-color: #911;
+      }
     }
   }
 </style>

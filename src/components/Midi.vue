@@ -102,12 +102,19 @@
         if (!self.midiOutput) { return; }
         self.midiOutput.stopNote(note);
       },
+      playObject(playObject) {
+        const self = this;
+        if (!self.midiOutput) { return; }
+        if (!playObject || !playObject.note) { return; }
+        self.midiOutput.playNote(playObject.note, 'all', { duration: 100 });
+      },
     },
     created() {
       const self = this;
       EventBus.$on('setTempo', self.setBpm);
       EventBus.$on('startPlayingNote', self.startPlayingNote);
       EventBus.$on('stopPlayingNote', self.stopPlayingNote);
+      EventBus.$on('playObject', self.playObject);
       self.initMidi();
     },
     updated() {
