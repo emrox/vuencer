@@ -1,5 +1,5 @@
 <template lang="jade">
-  div.sequencer-trigger
+  div.sequencer-trigger( v-bind:class="{ 'has-note': hasNote }" )
     div.sequencer-trigger__button( @click.ctrl="record" )
     led
     div.sequencer-trigger__label( v-bind:class="isFourth" )
@@ -32,6 +32,10 @@
         return {
           'sequencer-trigger__label--fourth': this.step % 4 === 1,
         };
+      },
+      hasNote() {
+        if (this.play.note) { return true; }
+        return false;
       },
     },
     methods: {
@@ -101,6 +105,12 @@
     .led {
       margin: 0.4em auto 0;
     }
+
+    &.has-note {
+      .sequencer-trigger__button {
+        border-color: #66f;
+      }
+    }
   }
 
   .in-record-mode {
@@ -108,6 +118,13 @@
       &__button {
         border-color: #911;
       }
+      &.has-note {
+        .sequencer-trigger__button {
+          border-color: #f6f;
+        }
+      }
+
+
     }
   }
 </style>
