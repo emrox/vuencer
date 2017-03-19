@@ -54,9 +54,10 @@
         self.play.note = self.$parent.$data.recordNote;
       },
       erase(event) {
+        const self = this;
         event.preventDefault();
         if (!self.$parent.$data.recordMode) { return false; }
-        this.play.note = undefined;
+        self.play.note = undefined;
         return false;
       },
     },
