@@ -2,6 +2,7 @@
   .midi
     .midi__start(v-on:click="start")
     .midi__stop(v-on:click="stop")
+    .midi__record(v-on:click="toggleRecord", v-bind:class="{ 'in-record-mode': recordMode }", title="use [CTRL] to quick toggle record mode")
     select.midi__choose-output(v-on:change="selectMidiOutput($event.target.value)")
       option(value="")
         | Select Midi Output Device
@@ -22,6 +23,7 @@
         tickCounter: 0,
         midiOutputs: [],
         midiOutput: undefined,
+        recordMode: false,
       };
     },
     computed: {
@@ -69,6 +71,21 @@
         self.midiOutput.sendStop();
         if (self.tickInterval) { clearInterval(self.tickInterval); }
       },
+      toggleRecord() {
+        if (this.recordMode) {
+          this.setRecordModeOff();
+        } else {
+          this.setRecordModeOn();
+        }
+      },
+      setRecordModeOn(fromEventBus) {
+        this.recordMode = true;
+        if (!fromEventBus) { EventBus.$emit('recordModeOn', true); }
+      },
+      setRecordModeOff(fromEventBus) {
+        this.recordMode = false;
+        if (!fromEventBus) { EventBus.$emit('recordModeOff', true); }
+      },
       initMidi() {
         const self = this;
         WebMidi.enable((err) => {
@@ -115,6 +132,8 @@
       EventBus.$on('startPlayingNote', self.startPlayingNote);
       EventBus.$on('stopPlayingNote', self.stopPlayingNote);
       EventBus.$on('playObject', self.playObject);
+      EventBus.$on('recordModeOn', self.setRecordModeOn);
+      EventBus.$on('recordModeOff', self.setRecordModeOff);
       self.initMidi();
     },
     updated() {
@@ -127,7 +146,8 @@
   .midi {
     margin-bottom: 1em;
     &__start,
-    &__stop {
+    &__stop,
+    &__record {
       display: inline-block;
       width: 4em;
       height: 1.4em;
@@ -163,6 +183,8 @@
     }
 
     &__stop {
+      margin-right: 1em;
+
       &::after {
         content: " ";
         display: inline-block;
@@ -174,6 +196,41 @@
       &:active {
         &::after {
           background-color: #999;
+        }
+      }
+    }
+
+    &__record {
+      background-color: #754545;
+
+      &::after {
+        content: " ";
+        display: inline-block;
+        width: 0.5em;
+        height: 0.5em;
+        background-color: #ccc;
+        border-radius: 50%;
+      }
+
+      &:hover {
+        background-color: #956565;
+      }
+
+      &:active {
+        &::after {
+          background-color: #f99;
+        }
+      }
+
+      &.in-record-mode {
+        background-color: #bd3c3c;
+
+        &:hover {
+          background-color: #cd4c4c;
+        }
+
+        &::after {
+          background-color: #faa;
         }
       }
     }

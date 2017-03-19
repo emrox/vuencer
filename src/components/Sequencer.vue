@@ -54,11 +54,19 @@
 
         self.$children[self.currentStep - 1].$emit('trigger');
       },
-      recordModeOn(event) {
-        if (event.key === 'Control') { this.recordMode = true; }
+      quickRecordModeOn(event) {
+        if (event.key === 'Control') { this.setRecordModeOn(); }
       },
-      recordModeOff(event) {
-        if (event.key === 'Control') { this.recordMode = false; }
+      quickRecordModeOff(event) {
+        if (event.key === 'Control') { this.setRecordModeOff(); }
+      },
+      setRecordModeOn(fromEventBus) {
+        this.recordMode = true;
+        if (!fromEventBus) { EventBus.$emit('recordModeOn', true); }
+      },
+      setRecordModeOff(fromEventBus) {
+        this.recordMode = false;
+        if (!fromEventBus) { EventBus.$emit('recordModeOff', true); }
       },
       setRecordingNote(note) {
         this.recordNote = note;
@@ -70,8 +78,10 @@
       EventBus.$on('tick', self.processTick);
       self.$on('step', self.processStep);
 
-      window.addEventListener('keydown', self.recordModeOn);
-      window.addEventListener('keyup', self.recordModeOff);
+      window.addEventListener('keydown', self.quickRecordModeOn);
+      window.addEventListener('keyup', self.quickRecordModeOff);
+      EventBus.$on('recordModeOn', self.setRecordModeOn);
+      EventBus.$on('recordModeOff', self.setRecordModeOff);
       EventBus.$on('startPlayingNote', self.setRecordingNote);
     },
   };
