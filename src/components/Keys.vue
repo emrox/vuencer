@@ -1,13 +1,20 @@
 <template lang="jade">
-  ul.keys
-    li(
+  .keys
+    .settings
+      .shift-octave
+        .left( v-on:click="octave -= 1" )
+        .current
+          {{ octave }}
+        .right( v-on:click="octave += 1" )
+    ul.board
+      li(
         v-for="key in keys",
         :data-note="key",
-        :class="key.endsWith('#') ? 'keys__black' : 'keys__white'",
+        :class="key.endsWith('#') ? 'black' : 'white'",
         v-on:mousedown="startPlay",
         v-on:mouseup="stopPlay",
         v-on:mouseleave="stopPlay",
-     )
+      )
 </template>
 
 <script>
@@ -19,14 +26,11 @@
         type: Array,
         default: () => ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       },
-      octave: {
-        type: Number,
-        default: 3,
-      },
     },
     data() {
       return {
         currentNotePlaying: undefined,
+        octave: 3,
       };
     },
     methods: {
@@ -49,48 +53,110 @@
 
 <style lang="scss">
   .keys {
-    li {
+    margin: 1em 0;
+
+    .board {
+      margin: 0;
+      li {
+        display: inline-block;
+        list-style: none;
+      }
+
+      .white,
+      .black {
+        cursor: pointer;
+      }
+
+      .white {
+        width: 3em;
+        height: 6em;
+        border: 1px solid #333;
+
+        &:not(:last-child) {
+          border-right-width: 0;
+        }
+
+        &:hover {
+          background-color: #26262a;
+        }
+
+        &:active {
+          background-color: #28282e;
+        }
+      }
+
+      .black {
+        position: absolute;
+        width: 2em;
+        height: 4em;
+        margin-left: -1em;
+        border: 1px solid #333;
+        background-color: #333;
+
+        &:hover {
+          background-color: #363638;
+        }
+
+        &:active {
+          background-color: #38383a;
+        }
+      }
+    }
+
+    .settings {
       display: inline-block;
-      list-style: none;
-    }
+      margin: 0 auto;
+      overflow: hidden;
 
-    &__white,
-    &__black {
-      cursor: pointer;
-    }
+      .shift-octave {
+        .left,
+        .current,
+        .right {
+          display: inline-block;
+          height: 1.4em;
+          float: left;
+          background-color: #555;
+          color: #ccc;
+        }
 
-    &__white {
-      width: 3em;
-      height: 6em;
-      border: 1px solid #333;
+        .left,
+        .right {
+          width: 3em;
+          border-radius: 0.7em;
+          background-color: #555;
+          cursor: pointer;
 
-      &:not(:last-child) {
-        border-right-width: 0;
-      }
+          &:hover {
+            background-color: #666;
+          }
 
-      &:hover {
-        background-color: #26262a;
-      }
+          &:active {
+            color: #999;
+          }
+        }
 
-      &:active {
-        background-color: #28282e;
-      }
-    }
+        .current {
+          width: 3em;
+          cursor: default;
+        }
 
-    &__black {
-      position: absolute;
-      width: 2em;
-      height: 4em;
-      margin-left: -1em;
-      border: 1px solid #333;
-      background-color: #333;
+        .left {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
 
-      &:hover {
-        background-color: #363638;
-      }
+          &::before {
+            content: "<";
+          }
+        }
 
-      &:active {
-        background-color: #38383a;
+        .right {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+
+          &::before {
+            content: ">";
+          }
+       }
       }
     }
   }
