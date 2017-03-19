@@ -1,6 +1,6 @@
 <template lang="jade">
   div.sequencer-trigger( v-bind:class="{ 'has-note': hasNote }" )
-    div.sequencer-trigger__button( @click.ctrl="record" )
+    div.sequencer-trigger__button( @click.left.ctrl="record", v-on:contextmenu="erase" )
     led
     div.sequencer-trigger__label( v-bind:class="isFourth" )
       {{ step }}
@@ -52,6 +52,12 @@
         if (!self.$parent.$data.recordMode) { return; }
 
         self.play.note = self.$parent.$data.recordNote;
+      },
+      erase(event) {
+        event.preventDefault();
+        if (!self.$parent.$data.recordMode) { return false; }
+        this.play.note = undefined;
+        return false;
       },
     },
     created() {
