@@ -1,5 +1,5 @@
 <template lang="jade">
-  .sequencer( v-bind:class="{ recording: recording }" )
+  .sequencer( v-bind:class="{ 'in-record-mode': recordMode }" )
     .sequencer-row( v-for="rowNumber in rowCount" )
       sequencer-trigger( v-for="step in stepCountOnRow(rowNumber)", :key = "step", :step = "step" )
 </template>
@@ -24,7 +24,7 @@
       return {
         currentStep: 0,
         currentRow: 1,
-        recording: false,
+        recordMode: false,
         recordNote: undefined,
       };
     },
@@ -55,10 +55,10 @@
         self.$children[self.currentStep - 1].$emit('trigger');
       },
       recordModeOn(event) {
-        if (event.key === 'Control') { this.recording = true; }
+        if (event.key === 'Control') { this.recordMode = true; }
       },
       recordModeOff(event) {
-        if (event.key === 'Control') { this.recording = false; }
+        if (event.key === 'Control') { this.recordMode = false; }
       },
       setRecordingNote(note) {
         this.recordNote = note;

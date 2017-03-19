@@ -45,7 +45,7 @@
       },
       record() {
         const self = this;
-        if (!self.$parent.$data.recording) { return; }
+        if (!self.$parent.$data.recordMode) { return; }
 
         self.play.note = self.$parent.$data.recordNote;
       },
@@ -103,7 +103,7 @@
     }
   }
 
-  .recording {
+  .in-record-mode {
     .sequencer-trigger {
       &__button {
         border-color: #911;
