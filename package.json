@@ -1,7 +1,7 @@
 {
-  "name": "step-seq",
+  "name": "Vuencer",
   "version": "1.0.0",
-  "description": "a step sequencer",
+  "description": "a midi step sequencer running in browser",
   "author": "Stefan Bauckmeier <stefan@bauckmeier.de>",
   "private": true,
   "scripts": {

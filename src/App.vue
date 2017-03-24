@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <step-seq />
+    <vuencer />
   </div>
 </template>
 
 <script>
-  import StepSeq from './components/StepSeq.vue';
+  import Vuencer from './components/Vuencer.vue';
 
   export default {
-    components: { StepSeq },
+    components: { Vuencer },
     name: 'app',
   };
 </script>

@@ -1,6 +1,12 @@
-# step-seq
+# Vuencer
 
-> a step sequencer
+a midi step sequencer running in browser
+
+## Requirements
+
+A browser supporting [Web MIDI API](https://webaudio.github.io/web-midi-api/).
+Currently Chrome, Opera and Android WebView component should support this out of the box. This project is build testing
+with Chrome.
 
 ## Build Setup
 
@@ -27,4 +33,5 @@ npm run e2e
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and
+[docs for vue-loader](http://vuejs.github.io/vue-loader).

@@ -1,5 +1,5 @@
 <template lang="jade">
-  div.step-seq
+  .vuencer
     midi
     tempo
     keys
