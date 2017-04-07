@@ -3,6 +3,10 @@
     .midi__start(v-on:click="start")
     .midi__stop(v-on:click="stop")
     .midi__record(v-on:click="toggleRecord", v-bind:class="{ 'in-record-mode': recordMode }", title="use [CTRL] to quick toggle record mode")
+    .midi__send_clock
+      label
+        input(type="checkbox", v-model="sendMidiClock")
+        | send midi clock
     select.midi__choose-output(v-on:change="selectMidiOutput($event.target.value)")
       option(value="")
         | Select Midi Output Device
@@ -24,6 +28,7 @@
         midiOutputs: [],
         midiOutput: undefined,
         recordMode: false,
+        sendMidiClock: true,
       };
     },
     computed: {
@@ -56,14 +61,14 @@
         self.tickCounter += 1;
         if (self.tickCounter > 24) { self.tickCounter = 1; }
 
-        self.midiOutput.sendClock();
+        if (self.sendMidiClock) { self.midiOutput.sendClock(); }
         EventBus.$emit('tick', self.tickCounter);
       },
       start() {
         const self = this;
         self.running = true;
         self.initInterval();
-        self.midiOutput.sendContinue();
+        if (self.sendMidiClock) { self.midiOutput.sendContinue(); }
       },
       stop() {
         const self = this;
@@ -198,6 +203,11 @@
           background-color: #999;
         }
       }
+    }
+
+    &__send_clock {
+      color: #fff;
+      font-size: 0.8em;
     }
 
     &__record {
